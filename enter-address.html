@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Address</title>
+  <style>
+    #thankYouMessage {
+      display: none;
+      color: green;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter Your Home Address</h2>
+  <form id="addressForm">
+    <label for="address">Address:</label><br>
+    <textarea id="address" name="address" rows="4" cols="50" required></textarea><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="thankYouMessage">Thank you for submitting!</p>
+
+  <script>
+    document.getElementById('addressForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const newAddress = document.getElementById('address').value.trim();
+      if (!newAddress) return;
+
+      // Get existing addresses or initialize an empty array
+      const existing = JSON.parse(localStorage.getItem('userAddresses')) || [];
+
+      // Add the new address
+      existing.push(newAddress);
+
+      // Save back to localStorage
+      localStorage.setItem('userAddresses', JSON.stringify(existing));
+
+      // Show thank you message
+      document.getElementById('addressForm').style.display = 'none';
+      document.getElementById('thankYouMessage').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
